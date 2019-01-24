@@ -42,11 +42,14 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
+            //Plugins.Add(new SwaggerFeature());
+
             SetConfig(new HostConfig
             {
                 DefaultRedirectPath = "/metadata",
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
             });
         }
+        //routes.IgnoreRoute("api/{*pathInfo}"); 
     }
 }
