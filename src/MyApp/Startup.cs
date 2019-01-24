@@ -6,6 +6,7 @@ using Funq;
 using ServiceStack;
 using ServiceStack.Configuration;
 using MyApp.ServiceInterface;
+using MyApp.ServiceInterface.Business;
 
 namespace MyApp
 {
@@ -18,6 +19,7 @@ namespace MyApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +44,7 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
+            container.RegisterAutoWiredAs<AdrBusiness, IAdrBusiness>().ReusedWithin(ReuseScope.None);
             //Plugins.Add(new SwaggerFeature());
 
             SetConfig(new HostConfig
@@ -49,6 +52,7 @@ namespace MyApp
                 DefaultRedirectPath = "/metadata",
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
             });
+
         }
         //routes.IgnoreRoute("api/{*pathInfo}"); 
     }
