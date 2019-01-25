@@ -11,8 +11,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="ServiceStack" Version="5.4" />
-    <PackageReference Include="ServiceStack.Api.Swagger" Version="5.4" />
-    <PackageReference Include="ServiceStack.Logging.Log4Net" Version="5.4" />
+    <PackageReference Include="ServiceStack.Api.Swagger" Version="5.4.0" />
+    <PackageReference Include="ServiceStack.Logging.Log4Net" Version="5.4.0" />
+ 
   </ItemGroup>
 
   <ItemGroup>

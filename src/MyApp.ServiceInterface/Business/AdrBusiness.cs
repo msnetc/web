@@ -17,7 +17,7 @@ namespace MyApp.ServiceInterface.Business
 
    public class AdrBusiness : IAdrBusiness
     {
-        public DataSet ToDataSet(AdrUploadRequest request)
+        private DataSet ToDataSet(AdrUploadRequest request)
         {
             DataSet ds = new DataSet();
             DataTable dtAdrReports = request.AdrReports?.ToList().ToDataTable();
