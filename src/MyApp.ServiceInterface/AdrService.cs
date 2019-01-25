@@ -13,8 +13,8 @@ namespace MyApp.ServiceInterface
             try
             {
                 adrBusiness = base.TryResolve<IAdrBusiness>();
-                int cnt = adrBusiness.UploadToAdr(request);
-                return new AdrUploadResponse() { Message = cnt.ToString(), Code = 200 };
+                adrBusiness.UploadToAdr(request);
+                return new AdrUploadResponse() { Message =  "成功", Code = 200 };
             }
             catch (Exception e)
             {

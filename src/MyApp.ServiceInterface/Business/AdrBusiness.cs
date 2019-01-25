@@ -6,12 +6,13 @@ using System.Text;
 using MyApp.ServiceInterface.utils;
 using MyApp.ServiceModel;
 using MyApp.ServiceModel.Adr;
+using ServiceStack;
 
 namespace MyApp.ServiceInterface.Business
 {
     public interface IAdrBusiness
     {
-        int UploadToAdr(AdrUploadRequest request);
+        void UploadToAdr(AdrUploadRequest request);
     }
 
    public class AdrBusiness : IAdrBusiness
@@ -42,10 +43,9 @@ namespace MyApp.ServiceInterface.Business
             return ds;
         }
 
-        public int UploadToAdr(AdrUploadRequest request)
+        public void UploadToAdr(AdrUploadRequest request)
         {
-            DataSet ds = ToDataSet(request);
-            return ds.Tables.Count;
+            DataSet ds = ToDataSet(request);            
         }
     }
 }
