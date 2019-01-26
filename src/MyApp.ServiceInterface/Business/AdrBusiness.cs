@@ -54,16 +54,9 @@ namespace MyApp.ServiceInterface.Business
         {
             
             DataSet ds = ToDataSet(request);
-            using (var db = DbConnectionFactory.OpenDbConnection())
-            {
-                //成功
-                db.UpdateOnly(() => new ReportSupervision() { ReferStatus = 1 }, p => p.Id == request.RsId);
-                db.Close();
-            }
             object[] objArray = new object[] { ds, AppSettings.Get<String>("AdrServer.UserName"), AppSettings.Get<String>("AdrServer.UserPwd"), request.btUploadFile, request.filename };
             AdrUploadParameter requestParameter = new AdrUploadParameter();
             requestParameter.objArray = objArray;
-
             using (var client = new XmlServiceClient(AppSettings.Get<String>("AdrServer.Url")))
             {
                 Task<String> uploadToAdrTask = client.PostAsync(requestParameter);
