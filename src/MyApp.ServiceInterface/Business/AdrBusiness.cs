@@ -52,22 +52,28 @@ namespace MyApp.ServiceInterface.Business
 
         public void UploadToAdr(AdrUploadRequest request)
         {
-            
+
             DataSet ds = ToDataSet(request);
-            object[] objArray = new object[] { ds, AppSettings.Get<String>("AdrServer.UserName"), AppSettings.Get<String>("AdrServer.UserPwd"), request.btUploadFile, request.filename };
+            object[] objArray = new object[]
+            {
+                ds, AppSettings.Get<String>("AdrServer.UserName"), AppSettings.Get<String>("AdrServer.UserPwd"),
+                request.btUploadFile, request.filename
+            };
             AdrUploadParameter requestParameter = new AdrUploadParameter();
             requestParameter.objArray = objArray;
             using (var client = new XmlServiceClient(AppSettings.Get<String>("AdrServer.Url")))
             {
-                Task<String> uploadToAdrTask = client.PostAsync(requestParameter);
+                Task<String>  uploadToAdrTask = client.PostAsync(requestParameter);
+                client.Dispose();
+
                 uploadToAdrTask.ContinueWith<String>(task =>
                 {
-                    if (uploadToAdrTask.IsSuccess()) { 
+                    if (uploadToAdrTask.IsSuccess())
+                    {
                         using (var db = DbConnectionFactory.OpenDbConnection())
                         {
                             //成功
-                            db.UpdateOnly(() => new ReportSupervision(){ ReferStatus =1},p => p.Id == request.RsId);
-                            db.Close();
+                            db.UpdateOnly(() => new ReportSupervision() { ReferStatus = 1 }, p => p.Id == request.RsId);
                             return task.Result;
                         }
                     }
@@ -75,7 +81,6 @@ namespace MyApp.ServiceInterface.Business
                     {
                         //失败
                         db.UpdateOnly(() => new ReportSupervision() { ReferStatus = 2 }, p => p.Id == request.RsId);
-                        db.Close();
                         return task.Result;
                     }
                 });
