@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Funq;
 using ServiceStack;
-using ServiceStack.Configuration;
 using MyApp.ServiceInterface;
 using MyApp.ServiceInterface.Business;
+using ServiceStack.Api.Swagger;
+using ServiceStack.Data;
+using ServiceStack.Logging;
+using ServiceStack.Logging.Log4Net;
+using ServiceStack.OrmLite;
 
 namespace MyApp
 {
@@ -24,11 +30,11 @@ namespace MyApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseServiceStack(new AppHost
             {
                 AppSettings = new NetCoreAppSettings(Configuration)
@@ -44,15 +50,14 @@ namespace MyApp
         public override void Configure(Container container)
         {
             container.RegisterAutoWiredAs<AdrBusiness, IAdrBusiness>().ReusedWithin(ReuseScope.None);
-            //Plugins.Add(new SwaggerFeature());
-
+            Plugins.Add(new SwaggerFeature());
+            String strMedsci = AppSettings.Get<String>("ConnStr.PV_DB");
+            container.Register<IDbConnectionFactory>(new OrmLiteConnectionFactory(strMedsci, MySqlDialect.Provider));
             SetConfig(new HostConfig
             {
                 DefaultRedirectPath = "/metadata",
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
             });
-
         }
-        //routes.IgnoreRoute("api/{*pathInfo}"); 
     }
 }

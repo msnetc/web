@@ -9,6 +9,7 @@ namespace MyApp.ServiceModel
     [Route("/AdrUpload")]
     public  class AdrUploadRequest : IReturn<AdrUploadResponse>
     {
+        public String RsId { get; set; }
         public List<ADR_REPORT> AdrReports { get; set; }
         public List<ADR_RPT_DOUBT_MERGE> AdrRptDoubtMerges { get; set; }
         public List<ADR_RPT_ADRNAME> AdrRptAdrnames { get; set; }
