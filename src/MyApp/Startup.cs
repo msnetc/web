@@ -10,8 +10,6 @@ using MyApp.ServiceInterface;
 using MyApp.ServiceInterface.Business;
 using ServiceStack.Api.Swagger;
 using ServiceStack.Data;
-using ServiceStack.Logging;
-using ServiceStack.Logging.Log4Net;
 using ServiceStack.OrmLite;
 
 namespace MyApp
@@ -30,7 +28,6 @@ namespace MyApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -51,6 +48,7 @@ namespace MyApp
         {
             container.RegisterAutoWiredAs<AdrBusiness, IAdrBusiness>().ReusedWithin(ReuseScope.None);
             Plugins.Add(new SwaggerFeature());
+            //LogManager.LogFactory = new Log4NetFactory(configureLog4Net: true);
             String strMedsci = AppSettings.Get<String>("ConnStr.PV_DB");
             container.Register<IDbConnectionFactory>(new OrmLiteConnectionFactory(strMedsci, MySqlDialect.Provider));
             SetConfig(new HostConfig

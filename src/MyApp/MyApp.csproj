@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="log4j.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="log4j.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -12,9 +22,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="ServiceStack" Version="5.4" />
     <PackageReference Include="ServiceStack.Api.Swagger" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.Logging.Log4Net" Version="5.4.0" />
-    <PackageReference Include="ServiceStack.OrmLite.MySql.Core" Version="5.4.0" />
- 
+    <PackageReference Include="ServiceStack.OrmLite.MySql.Core" Version="5.4.0" /> 
   </ItemGroup>
 
   <ItemGroup>

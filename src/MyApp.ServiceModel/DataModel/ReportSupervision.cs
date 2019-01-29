@@ -25,6 +25,8 @@ namespace MyApp.ServiceModel.DataModel
         [Alias("refer_status")]
         public byte ReferStatus { get; set; }
 
+        [Alias("refer_result_info")]
+        public String ReferResultInfo { get; set; }
 
         [Alias("REVISION")]
         public int Revision { get; set; }

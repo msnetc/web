@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
 using ServiceStack;
 using MyApp.ServiceModel;
 using MyApp.ServiceInterface.Business;
+using ServiceStack.Logging;
 
 namespace MyApp.ServiceInterface
 {
     public class AdrService : ServiceBase
     {
         public IAdrBusiness adrBusiness;
-        public object Any(AdrUploadRequest request)
+        public static ILog Log = LogManager.GetLogger(typeof(AdrService));
+        public object Post(AdrUploadRequest request)
         {
             try
             {
@@ -18,11 +21,10 @@ namespace MyApp.ServiceInterface
                 }
                 adrBusiness = base.TryResolve<IAdrBusiness>();
                 adrBusiness.UploadToAdr(request);
-                return new AdrUploadResponse() { Message =  "成功", Code = 200 };
+                return new AdrUploadResponse() { Message =  "调用成功", Code = 200 };
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
                 return new AdrUploadResponse() { Message = e.Message, Code = 444 };
             }
         
