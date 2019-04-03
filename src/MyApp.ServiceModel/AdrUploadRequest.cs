@@ -6,7 +6,7 @@ using MyApp.ServiceModel.Adr;
 
 namespace MyApp.ServiceModel
 {
-    [Route("/AdrUpload")]
+    [Route("/AdrUpload","POST")]
     public  class AdrUploadRequest : IReturn<AdrUploadResponse>
     {
         public String RsId { get; set; }
